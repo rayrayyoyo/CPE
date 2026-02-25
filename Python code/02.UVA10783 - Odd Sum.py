@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 case = int(input())  # 讀取測試案例的數量
 
-for i in range(0, case):  # 遍歷每個測試案例
+for i in range(case):  # 遍歷每個測試案例
     A, B = int(input()), int(input())  # 讀取範圍的起始值 A 和結束值 B
 
     sum = 0  # 初始化總和為0
