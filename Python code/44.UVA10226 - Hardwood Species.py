@@ -1,46 +1,30 @@
-# -*- coding: utf-8 -*-
 import sys
-from collections import Counter
 
-# 一次讀取所有輸入，避免 I/O 延遲
+# 一次讀進來，用 splitlines 拆成一行一行的清單
 input_data = sys.stdin.read().splitlines()
-iterator = iter(input_data)
 
-try:
-    # 第一行是測資數量
-    first_line = next(iterator)
-    if not first_line:
-        # 處理可能的空行
-        first_line = next(iterator)
-    T = int(first_line)
+# 第一行是 Case 數量 T
+T = int(input_data[0])
+
+# 從第 3 行開始才是真正的資料（跳過 T 後面的空行）
+current_row = 2
+for t in range(T):
+    if t > 0: print() # 題目要求：Case 之間要印一個空行
     
-    # 跳過第一筆測資前的空行
-    next(iterator)
+    trees = {} # 用字典來記數：{樹名: 次數}
+    total = 0  # 總棵數
     
-    for t in range(T):
-        if t > 0:
-            print() # 每個 Case 之間要有空行
-            
-        trees = []
-        while True:
-            try:
-                line = next(iterator)
-                if not line: # 遇到空行代表該 Case 結束
-                    break
-                trees.append(line)
-            except StopIteration:
-                break
-        
-        # 使用 Counter 加速統計 O(N)
-        counts = Counter(trees)
-        total = len(trees)
-        
-        # 題目要求按字母排序輸出
-        sorted_names = sorted(counts.keys())
-        
-        for name in sorted_names:
-            percentage = (counts[name] / total) * 100
-            print(f"{name} {percentage:.4f}")
-            
-except StopIteration:
-    pass
+    # 讀取這一組的樹，直到遇到空行或資料結束
+    while current_row < len(input_data) and input_data[current_row] != "":
+        name = input_data[current_row]
+        trees[name] = trees.get(name, 0) + 1 # 有就加1，沒有就設為0再加1
+        total += 1
+        current_row += 1
+    
+    # 題目要求按字母排序
+    for name in sorted(trees.keys()):
+        # 計算百分比，保留小數點後四位
+        percent = (trees[name] / total) * 100
+        print(f"{name} {percent:.4f}")
+    
+    current_row += 1 # 跳過組與組之間的空行

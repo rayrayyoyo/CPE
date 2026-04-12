@@ -1,7 +1,5 @@
-while True:
-	try:
-		n = int(input())
-	except EOFError:
-		break
-	
-	print(n + n // 2)
+import sys
+
+for line in sys.stdin:
+    n = int(line)
+    print(n + n // 2)
