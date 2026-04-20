@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 import sys
 
-# 讀取整個檔案內容比較好處理跨行
 text = sys.stdin.read()
 result = []
 first = True
