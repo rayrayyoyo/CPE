@@ -1,7 +1,5 @@
 import sys
-
 data = sys.stdin.read().split()
-
 idx = 0      
 case_num = 1 
 
