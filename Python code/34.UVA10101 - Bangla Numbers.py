@@ -1,39 +1,28 @@
-# -*- coding: utf-8 -*-
 import sys
 
 def solve(n):
-    if n >= 10000000:
-        solve(n // 10000000)
-        print(" kuti", end="")
-        n %= 10000000
-    if n >= 100000:
-        solve(n // 100000)
-        print(" lakh", end="")
-        n %= 100000
-    if n >= 1000:
-        solve(n // 1000)
-        print(" hajar", end="")
-        n %= 1000
-    if n >= 100:
-        solve(n // 100)
-        print(" shata", end="")
-        n %= 100
-    if n > 0:
-        print(f" {n}", end="")
+    units = [ (10000000, "kuti"), (100000, "lakh"), (1000, "hajar"), (100, "shata") ]
+    
+    for val, name in units:
+        if n >= val:
+            solve(n // val)
+            print(f" {name}", end="")
+            n %= val
+            
+    if n > 0 or not any(n >= v for v, _ in units):
+        if n > 0: print(f" {n}", end="")
 
-lines = sys.stdin.readlines()
 case_num = 1
-for line in lines:
+for line in sys.stdin:
     line = line.strip()
     if not line: continue
     
-    val = int(line)
-    # 格式要求：序號佔 4 格，靠右對齊
     print(f"{case_num:>4}.", end="")
+    num = int(line)
     
-    if val == 0:
+    if num == 0:
         print(" 0")
     else:
-        solve(val)
+        solve(num)
         print()
     case_num += 1
